@@ -1,9 +1,19 @@
 import { useState } from 'react';
 import reactLogo from './assets/react.svg';
 import viteLogo from '/vite.svg';
+import { useQuery } from '@tanstack/react-query';
+import { getMetrics } from './api';
 
 function App() {
 	const [count, setCount] = useState(0);
+
+	const { data } = useQuery({
+		queryKey: ['metrics'],
+		queryFn: getMetrics,
+		refetchOnWindowFocus: false,
+	});
+
+	console.log(data);
 
 	return (
 		<>
