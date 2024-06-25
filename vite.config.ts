@@ -3,5 +3,13 @@ import react from '@vitejs/plugin-react';
 
 // https://vitejs.dev/config/
 export default defineConfig({
+	server: {
+		proxy: {
+			'/api': {
+				target: 'https://sundial-fe-interview.vercel.app',
+				changeOrigin: true,
+			},
+		},
+	},
 	plugins: [react()],
 });
