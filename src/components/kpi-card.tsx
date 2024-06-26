@@ -68,7 +68,7 @@ export const KPICard = ({
 							)?.displayName
 					}
 				</h3>
-				<div className='flex justify-between items-end gap-8'>
+				<div className='flex justify-between items-end gap-2 md:gap-8'>
 					<div>
 						<p className='text-2xl font-bold text-gray-800'>
 							{formatNumber(

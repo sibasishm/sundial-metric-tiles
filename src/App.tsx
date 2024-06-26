@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { CirclePlus } from 'lucide-react';
+
 import { TKPI } from './api/models';
 import { KPICard } from './components/kpi-card';
 import { Button } from './components/button';
@@ -12,28 +14,58 @@ function App() {
 	const [indicators, setIndicators] = useState<TIndicator[]>([]);
 	return (
 		<main className='container mx-auto max-w-7xl px-4 py-10'>
-			<div className='bg-white p-8 rounded-lg shadow-md grid grid-flow-col auto-cols-fr gap-4'>
+			<div
+				className='bg-white p-8 rounded-lg shadow-md grid gap-6'
+				style={{
+					gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
+					gridAutoFlow: 'dense',
+				}}
+			>
 				{indicators.length > 0 ? (
 					indicators.map((indicator, index) => (
-						<KPICard
-							onClick={() => {
-								setIndicators(prev => {
-									const newIndicators = [...prev];
-									newIndicators[index].mode = 'EDIT';
-									return newIndicators;
-								});
-							}}
-							key={index}
-							indicator={indicator}
-							onSave={indicators =>
-								setIndicators(prev => {
-									const newIndicators = [...prev];
-									newIndicators[index] = indicators;
-									console.log(newIndicators);
-									return newIndicators;
-								})
-							}
-						/>
+						<div key={index} className='flex flex-row gap-6 justify-between'>
+							<div className='flex-1'>
+								<KPICard
+									onClick={() => {
+										setIndicators(prev => {
+											const newIndicators = [...prev];
+											newIndicators[index].mode = 'EDIT';
+											return newIndicators;
+										});
+									}}
+									indicator={indicator}
+									onSave={indicators =>
+										setIndicators(prev => {
+											const newIndicators = [...prev];
+											newIndicators[index] = indicators;
+											console.log(newIndicators);
+											return newIndicators;
+										})
+									}
+								/>
+							</div>
+							<div className='h-full w-[2px] bg-gray-200 relative'>
+								<Button
+									size='icon'
+									className='h-6 w-6 rounded-full absolute top-1/2 -translate-x-1/2'
+									onClick={() => {
+										setIndicators(prev => {
+											const newIndicators = [...prev];
+											newIndicators.splice(index + 1, 0, {
+												id: newIndicators.length,
+												mode: 'EDIT',
+												metric: '',
+												segmentKey: '',
+												segmentId: '',
+											});
+											return newIndicators;
+										});
+									}}
+								>
+									<CirclePlus fill='#119F97' />
+								</Button>
+							</div>
+						</div>
 					))
 				) : (
 					<div className='flex flex-col items-center justify-center'>
