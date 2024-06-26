@@ -20,10 +20,12 @@ export const KPICard = ({
 	indicator,
 	onSave,
 	onClick,
+	onCancel,
 }: {
 	indicator: TIndicator;
-	onSave?: (indicators: TIndicator) => void;
+	onSave: (indicators: TIndicator) => void;
 	onClick: () => void;
+	onCancel: () => void;
 }) => {
 	const [metric, setMetric] = useState(indicator.metric);
 	const [segmentId, setSegmentId] = useState(indicator.segmentId);
@@ -166,10 +168,18 @@ export const KPICard = ({
 						variant='destructive'
 						className='w-full'
 						onClick={() => {
-							onSave?.({
-								...indicator,
-								mode: 'VIEW',
-							});
+							if (
+								indicator.metric &&
+								indicator.segmentKey &&
+								indicator.segmentId
+							) {
+								onSave({
+									...indicator,
+									mode: 'VIEW',
+								});
+							} else {
+								onCancel();
+							}
 						}}
 					>
 						Cancel
@@ -178,8 +188,9 @@ export const KPICard = ({
 				<div className='flex-1'>
 					<Button
 						className='w-full'
+						disabled={!metric || !segmentKey || !segmentId}
 						onClick={() => {
-							onSave?.({
+							onSave({
 								id: indicator.id,
 								mode: 'VIEW',
 								metric,

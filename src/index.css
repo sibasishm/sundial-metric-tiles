@@ -1,3 +1,30 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.grid-container {
+	display: grid;
+	gap: 1.5rem;
+	grid-auto-flow: dense;
+	grid-template-columns: 1fr;
+}
+
+.grid-container:nth-child(2) {
+	grid-template-columns: repeat(2, 1fr);
+}
+
+.grid-container:nth-child(3) {
+	grid-template-columns: repeat(3, 1fr);
+}
+
+@media (min-width: 480px) {
+	.grid-container {
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	}
+}
+
+/* @media (min-width: 1024px) {
+	.grid-container {
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	}
+} */

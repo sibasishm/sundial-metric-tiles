@@ -14,13 +14,7 @@ function App() {
 	const [indicators, setIndicators] = useState<TIndicator[]>([]);
 	return (
 		<main className='container mx-auto max-w-7xl px-4 py-10'>
-			<div
-				className='bg-white p-8 rounded-lg shadow-md grid gap-6'
-				style={{
-					gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-					gridAutoFlow: 'dense',
-				}}
-			>
+			<div className='bg-white p-8 rounded-lg shadow-md grid-container'>
 				{indicators.length > 0 ? (
 					indicators.map((indicator, index) => (
 						<div key={index} className='flex flex-row gap-6 justify-between'>
@@ -38,10 +32,16 @@ function App() {
 										setIndicators(prev => {
 											const newIndicators = [...prev];
 											newIndicators[index] = indicators;
-											console.log(newIndicators);
 											return newIndicators;
 										})
 									}
+									onCancel={() => {
+										setIndicators(prev => {
+											const newIndicators = [...prev];
+											newIndicators.splice(index, 1);
+											return newIndicators;
+										});
+									}}
 								/>
 							</div>
 							<div className='h-full w-[2px] bg-gray-200 relative'>
