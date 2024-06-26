@@ -14,8 +14,10 @@ import { TKPI } from '../../api/models';
 
 export const EditKPICard = ({
 	onSave,
+	onCancel,
 }: {
 	onSave: (indicators: TKPI) => void;
+	onCancel: () => void;
 }) => {
 	const [metric, setMetric] = useState('');
 	const [segmentId, setSegmentId] = useState('');
@@ -31,7 +33,7 @@ export const EditKPICard = ({
 	});
 
 	return (
-		<div className='flex flex-col gap-4 max-w-[224px] mx-auto'>
+		<div className='flex flex-col gap-4 max-w-[224px] mx-auto w-full'>
 			<Select value={metric} onValueChange={setMetric}>
 				<SelectTrigger>
 					<SelectValue placeholder='Select a metric' />
@@ -80,7 +82,7 @@ export const EditKPICard = ({
 			) : null}
 			<div className='flex items-center gap-2'>
 				<div className='flex-1'>
-					<Button variant='destructive' className='w-full'>
+					<Button variant='destructive' className='w-full' onClick={onCancel}>
 						Cancel
 					</Button>
 				</div>
