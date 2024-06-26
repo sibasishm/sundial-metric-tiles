@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { ArrowUp, ArrowDown, Triangle } from 'lucide-react';
+import { ResponsiveContainer, AreaChart, Area } from 'recharts';
 
 import { TKPI } from '../../api/models';
 import { getMetrics, getSegments, getSnapshots } from '../../api';
@@ -30,7 +31,7 @@ export const ViewKPICard = ({ indicator }: { indicator: TKPI }) => {
 
 	return (
 		<div>
-			<h3 className='text-lg md:text-xl font-bold text-gray-800'>
+			<h3 className='text-lg text-gray-700'>
 				{
 					metrics?.data.find(metric => metric.id === indicator.metric)
 						?.displayName
@@ -43,14 +44,14 @@ export const ViewKPICard = ({ indicator }: { indicator: TKPI }) => {
 						?.displayName
 				}
 			</h3>
-			<div className='flex justify-between items-center'>
+			<div className='flex justify-between items-end gap-8'>
 				<div>
 					<p className='text-2xl font-bold text-gray-800'>
 						{formatNumber(
 							getAverage(snapshots.data.values.map(val => val.value))
 						)}
 					</p>
-					<div className='flex items-center gap-6'>
+					<div className='flex items-center gap-6 mt-2'>
 						<div className='flex items-center'>
 							<span className='text-sm text-gray-500'>
 								{percentageChange > 0 ? (
@@ -71,6 +72,18 @@ export const ViewKPICard = ({ indicator }: { indicator: TKPI }) => {
 						</div>
 					</div>
 				</div>
+				<ResponsiveContainer width='100%' height={150}>
+					<AreaChart data={snapshots.data.values}>
+						<defs>
+							<linearGradient id='color' x1='0' y1='0' x2='0' y2='1'>
+								<stop offset='0%' stopColor='#2451B7' stopOpacity={0.4} />
+								<stop offset='75%' stopColor='#2451B7' stopOpacity={0.05} />
+							</linearGradient>
+						</defs>
+
+						<Area dataKey='value' stroke='#2451B7' fill='url(#color)' />
+					</AreaChart>
+				</ResponsiveContainer>
 			</div>
 		</div>
 	);
