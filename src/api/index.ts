@@ -1,5 +1,5 @@
 import ky from 'ky';
-import type { TMetric, TSanpshot, TSegment } from './models';
+import type { TKPI, TMetric, TSanpshot, TSegment } from './models';
 
 export const getMetrics = async () => {
 	const body = await ky.get('/api/metrics').json<{ data: Array<TMetric> }>();
@@ -11,15 +11,11 @@ export const getSegments = async () => {
 	return body;
 };
 
-export const getSnapshots = async (payload: {
-	metric: string;
-	segmentKey: string;
-	date: string;
-}) => {
+export const getSnapshots = async (payload: TKPI) => {
 	const body = await ky
-		.post('/api/snapshots', {
+		.post('/api/snapshot', {
 			json: payload,
 		})
-		.json<{ data: Array<TSanpshot> }>();
+		.json<{ data: TSanpshot }>();
 	return body;
 };

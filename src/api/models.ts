@@ -10,6 +10,12 @@ export type TSegment = {
 	values: Array<{ segmentId: string; displayName: string }>;
 };
 
+export type TKPI = {
+	metric: string;
+	segmentKey: string;
+	segmentId: string;
+};
+
 export type TSanpshot = {
 	metric: string;
 	segmentKey: string;
