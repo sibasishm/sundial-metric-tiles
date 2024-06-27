@@ -13,3 +13,9 @@ git clone <REPO_URL>
 pnpm install
 pnpm dev
 ```
+
+## Please Note
+
+- Select and Button components are taken from shadcn/ui for brevity
+- Recharts was preferred over Highcharts due to past familiarity, and simplicty
+- vite server proxy and vercel redirects are setup to solve the local CORS error
