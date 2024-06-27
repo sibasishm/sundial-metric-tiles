@@ -8,6 +8,7 @@ import {
 	SelectContent,
 	SelectGroup,
 	SelectItem,
+	SelectLabel,
 	SelectTrigger,
 	SelectValue,
 } from './select-dropdown';
@@ -29,7 +30,6 @@ export const KPICard = ({
 }) => {
 	const [metric, setMetric] = useState(indicator.metric);
 	const [segmentId, setSegmentId] = useState(indicator.segmentId);
-	const [segmentKey, setSegmentKey] = useState(indicator.segmentKey);
 
 	const { data: metrics } = useQuery({
 		queryKey: ['metrics'],
@@ -130,38 +130,23 @@ export const KPICard = ({
 					</SelectGroup>
 				</SelectContent>
 			</Select>
-			<Select value={segmentKey} onValueChange={setSegmentKey}>
+			<Select value={segmentId} onValueChange={setSegmentId}>
 				<SelectTrigger>
 					<SelectValue placeholder='Select a segment' />
 				</SelectTrigger>
 				<SelectContent>
-					<SelectGroup>
-						{segments?.data.map(segment => (
-							<SelectItem key={segment.segmentKey} value={segment.segmentKey}>
-								{segment.displayName}
-							</SelectItem>
-						))}
-					</SelectGroup>
+					{segments?.data.map(segment => (
+						<SelectGroup key={segment.segmentKey}>
+							<SelectLabel>{segment.displayName}</SelectLabel>
+							{segment.values.map(value => (
+								<SelectItem key={value.segmentId} value={value.segmentId}>
+									{value.displayName}
+								</SelectItem>
+							))}
+						</SelectGroup>
+					))}
 				</SelectContent>
 			</Select>
-			{segmentKey ? (
-				<Select value={segmentId} onValueChange={setSegmentId}>
-					<SelectTrigger>
-						<SelectValue placeholder='Select a segment' />
-					</SelectTrigger>
-					<SelectContent>
-						<SelectGroup>
-							{segments?.data
-								.find(segment => segment.segmentKey === segmentKey)
-								?.values.map(segment => (
-									<SelectItem key={segment.segmentId} value={segment.segmentId}>
-										{segment.displayName}
-									</SelectItem>
-								))}
-						</SelectGroup>
-					</SelectContent>
-				</Select>
-			) : null}
 			<div className='flex items-center gap-2'>
 				<div className='flex-1'>
 					<Button
@@ -188,13 +173,16 @@ export const KPICard = ({
 				<div className='flex-1'>
 					<Button
 						className='w-full'
-						disabled={!metric || !segmentKey || !segmentId}
+						disabled={!metric || !segmentId}
 						onClick={() => {
 							onSave({
 								id: indicator.id,
 								mode: 'VIEW',
 								metric,
-								segmentKey,
+								segmentKey:
+									segments?.data.find(segment =>
+										segment.values.find(val => val.segmentId === segmentId)
+									)?.segmentKey ?? '',
 								segmentId,
 							});
 						}}
