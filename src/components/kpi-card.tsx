@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { ArrowUp, ArrowDown, Triangle } from 'lucide-react';
-import { ResponsiveContainer, AreaChart, Area } from 'recharts';
+import { ResponsiveContainer, AreaChart, Area, Tooltip, XAxis } from 'recharts';
 
 import {
 	Select,
@@ -106,7 +106,9 @@ export const KPICard = ({
 									<stop offset='75%' stopColor='#119F97' stopOpacity={0.05} />
 								</linearGradient>
 							</defs>
+							<XAxis dataKey='date' hide={true} />
 							<Area dataKey='value' stroke='#119F97' fill='url(#color)' />
+							<Tooltip />
 						</AreaChart>
 					</ResponsiveContainer>
 				</div>
