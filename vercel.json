@@ -2,11 +2,7 @@
 	"rewrites": [
 		{
 			"source": "/api/:path(.*)",
-			"destination": "https://sundial-fe-interview.vercel.app"
-		},
-		{
-			"source": "/(.*)",
-			"destination": "/"
+			"destination": "https://sundial-fe-interview.vercel.app/:path"
 		}
 	]
 }
