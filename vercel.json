@@ -1,0 +1,12 @@
+{
+	"rewrites": [
+		{
+			"source": "/api/(.*)",
+			"destination": "https://sundial-fe-interview.vercel.app/$1"
+		},
+		{
+			"source": "/(.*)",
+			"destination": "/"
+		}
+	]
+}
